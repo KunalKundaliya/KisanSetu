@@ -1,3 +1,84 @@
+# Kisan Setu AI Saathi backend
+
+FastAPI backend for the existing React chat UI. It provides `POST /chat`, SQLite conversation memory, local ChromaDB retrieval, local Sentence Transformers embeddings, and Gemini-generated answers grounded in documents you ingest.
+
+## Setup
+
+1. Create the virtual environment:
+
+   ```bash
+   python -m venv .venv
+   ```
+
+2. Activate it.
+
+   Windows:
+
+   ```bash
+   .venv\Scripts\activate
+   ```
+
+   Linux/macOS:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+
+3. From this `backend` directory, install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Copy `.env.example` to `.env`, then set `GOOGLE_API_KEY` to a Google AI Studio API key (used only for generating answers). Embeddings run locally through Sentence Transformers and do not consume Gemini embedding quota. The multilingual model downloads automatically the first time. Adjust models or `FRONTEND_URL` only if needed.
+
+5. Put trusted agricultural PDF, TXT, Markdown, or DOCX files in `data/documents/`. Metadata includes source filename and page where available.
+
+6. Build/update the local knowledge base:
+
+   ```bash
+   python -m app.ingestion.ingest
+   ```
+
+7. Start the API:
+
+   ```bash
+   uvicorn main:app --reload --port 8000
+   ```
+
+8. In another terminal, run the existing React frontend:
+
+   ```bash
+   cd ../frontend
+   npm install
+   npm run dev
+   ```
+
+The existing frontend already sends requests to `http://localhost:8000/chat`; no frontend changes are needed.
+
+## API
+
+`POST /chat`
+
+```json
+{"user_id":"user123","conversation_id":null,"message":"मेरी गेहूं की फसल में पीले धब्बे हैं"}
+```
+
+The response includes `conversation_id`, `cardTitle`, `answer`, `detail`, and `source`. Send the returned conversation ID for later messages. The database retains only the most recent configured messages in each LLM context window (default 12), while storing the conversation locally in `kisan_setu.db`.
+
+`GET /health` returns `{"status":"ok"}`.
+
+## Safety and behavior
+
+The service retrieves knowledge-base context first. If no chunk reaches the configured relevance threshold, Gemini answers autonomously from its general agricultural knowledge without mentioning retrieval or missing context. It asks users to follow registered product labels and contact a qualified agricultural officer where a chemical dosage or diagnosis is uncertain. If the Google key is not configured, a safe configuration message is returned. Do not commit `.env`, `chroma_db`, or the local SQLite database.
+
+## Tests
+
+Run from `backend/`:
+
+```bash
+pytest
+```
 # Kisan Setu | Kisan-First AI Conversational Assistant 🌾
 
 > **SIH 2026 Problem Statement:** Agriculture & Rural Development  
