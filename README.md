@@ -17,14 +17,6 @@ Kisan Setu is an agriculture-support platform designed to help farmers access pr
 
 The project is intended to make agricultural information easier to access, support better market decisions, and provide guidance in English, Hindi, and Hinglish.
 
-## 2. Smart India Hackathon Context
-
-### Problem Statement
-
-Farmers often face difficulty finding reliable agricultural guidance, comparing market information, and maintaining accessible records of their transactions. Information may be distributed across documents, local sources, and informal advice, making it difficult to find practical and trustworthy answers quickly.
-
-### Proposed Solution
-
 Kisan Setu provides a single platform with:
 
 - A mandi directory with product prices and search support.
@@ -33,7 +25,7 @@ Kisan Setu provides a single platform with:
 - Document-grounded responses through a searchable agricultural knowledge base.
 - Conversation continuity for follow-up questions.
 
-### Expected Impact
+## 2.  Expected Impact
 
 - Faster access to understandable agricultural information.
 - Better visibility into mandi prices and available products.
