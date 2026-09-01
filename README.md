@@ -1,702 +1,296 @@
+
 # 🌾 Kisan Setu — किसान सेतु
 
-> **AI-powered agricultural assistance for Indian farmers — simple, accessible, and multilingual.**
+> Bridging the gap between Indian farmers and government services through AI-powered voice assistance.
 
 <div align="center">
 
-
-![SIH](https://img.shields.io/badge/Smart%20India%20Hackathon--blue?style=for-the-badge)
-
-![React](https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge\&logo=react)
-
-![Node.js](https://img.shields.io/badge/Backend-Node.js-green?style=for-the-badge\&logo=node.js)
-
-![Python](https://img.shields.io/badge/AI-Python-3776AB?style=for-the-badge\&logo=python)
-
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248?style=for-the-badge\&logo=mongodb)
+![Made for Farmers](https://img.shields.io/badge/Made%20for-Indian%20Farmers-green?style=for-the-badge&logo=leaf)
+![SIH 2026](https://img.shields.io/badge/Smart%20India%20Hackathon-2026-orange?style=for-the-badge)
+![License](https://img.shields.io/badge/License-ISC-blue?style=for-the-badge)
+![Node.js](https://img.shields.io/badge/Node.js-24.x-green?style=for-the-badge&logo=node.js)
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb)
 
 </div>
 
 ---
 
-## 🧭 Overview
+## Table of Contents
 
-**Kisan Setu (किसान सेतु)** is a farmer-focused digital agriculture platform developed for **Smart India Hackathon 2026**.
-
-The platform brings agricultural information and essential digital services together in a single, easy-to-use interface.
-
-Its central component, **Kisan Setu AI Saathi**, uses **Retrieval-Augmented Generation (RAG)** to provide agriculture-related answers using a curated knowledge base of agricultural and government documents.
-
-The goal is simple:
-
-> **Make reliable agricultural information easier for farmers to access, understand, and use.**
-
----
-
-# 🎯 Problem
-
-Farmers often need information from multiple sources for everyday agricultural decisions.
-
-They may need help with:
-
-* 🌾 Crop cultivation
-* 🐛 Crop problems and agricultural practices
-* 📋 Government schemes
-* 🏪 Mandi and market information
-* 💰 Crop selling
-* 📚 Agricultural guidelines
-* 🗣️ Information in a familiar language
-
-Traditional information sources can be difficult to search, understand, or access quickly.
-
-### Our Approach
-
-Kisan Setu provides a **single digital platform** where farmers can ask questions naturally and access agriculture-related services without having to search through multiple sources.
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Project Structure](#project-structure)
+- [How the RAG Chatbot Works](#how-the-rag-chatbot-works)
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+- [Schemes Covered](#schemes-covered-by-the-ai-knowledge-base)
+- [Tech Stack](#tech-stack)
+- [Roadmap](#roadmap)
 
 ---
 
-# 💡 Solution
+## Overview
 
-Kisan Setu combines a conventional full-stack application with an AI-powered RAG service.
+**Kisan Setu** *(Farmer's Bridge)* is a full-stack, mobile-first Progressive Web Application built for Smart India Hackathon 2026. It gives Indian farmers a conversational, RAG-powered AI assistant that understands their language — delivering personalized agricultural advice, government scheme eligibility, and mandi price updates in one place.
 
-```text
-                    👨‍🌾 Farmer / User
-                           │
-                           ▼
-                 ┌───────────────────┐
-                 │   React + Vite    │
-                 │     Frontend      │
-                 └─────────┬─────────┘
-                           │
-                ┌──────────┴──────────┐
-                │                     │
-                ▼                     ▼
-       ┌─────────────────┐   ┌──────────────────┐
-       │  Node.js +      │   │ Python + FastAPI │
-       │  Express.js     │   │   RAG Service    │
-       └────────┬────────┘   └────────┬─────────┘
-                │                     │
-                ▼                     ▼
-       ┌─────────────────┐   ┌──────────────────┐
-       │    MongoDB      │   │ Agricultural     │
-       │ Application     │   │ Knowledge Base   │
-       │     Data        │   └────────┬─────────┘
-       └─────────────────┘            │
-                                      ▼
-                             ┌──────────────────┐
-                             │ Retrieval Engine │
-                             │   + Gemini LLM   │
-                             └──────────────────┘
+> *"Koi bhi kisan akela nahi rahega."* — No farmer is left alone.
+
+---
+
+## Key Features
+
+| Feature | Description |
+|---|---|
+| 🤖 RAG AI Chatbot | Answers farmer queries using official scheme documents (PM-KMY, PM-KISAN, PMFBY, KCC) via Google Gemini 2.0 Flash + LangChain |
+| 🎙️ Voice Interface | Farmers speak in Hindi; the Web Speech API handles speech-to-text input and reads responses back aloud |
+| 📋 AgriStack Integration | Auto-links a farmer's Kisan ID from the National AgriStack registry on OTP login |
+| 🌾 Fasal Becho (Sell Crop) | Farmers list produce directly; buyers can browse and purchase |
+| 📊 Scheme Explorer | Browse PM-KISAN, PMFBY, KCC, and PM-KMY with one-tap eligibility checks |
+| 🖥️ Admin Portal | Manage farmer records, register Kisan IDs, and review scheme applications |
+| 📱 Mobile-First UI | Built as a smartphone-first experience with Material-style components |
+| 🔒 OTP Authentication | Passwordless login via mobile number |
+
+---
+
+## Project Structure
+
 ```
-
----
-
-# ✨ Key Features
-
-| Feature                    | Description                                                        |
-| -------------------------- | ------------------------------------------------------------------ |
-| 🤖 **AI Saathi**           | Conversational AI assistant for agriculture-related queries        |
-| 📚 **RAG Knowledge Base**  | Retrieves relevant information from curated agricultural documents |
-| 🧠 **Context-Aware Chat**  | Supports follow-up questions within a conversation                 |
-| 🌾 **Crop Guidance**       | Provides agriculture-related information and guidance              |
-| 🏪 **Mandi Directory**     | Search and explore mandi and product information                   |
-| 💰 **Crop Sales**          | Maintain farmer-specific crop sales records                        |
-| 📋 **Government Schemes**  | Explore agricultural schemes, eligibility and benefits             |
-| 🎙️ **Voice Interaction**  | Voice input/output using browser-supported speech capabilities     |
-| 🌐 **Multilingual**        | Designed for Hindi, English and Hinglish                           |
-| 🔎 **Agricultural Search** | Search agricultural and market-related information                 |
-| 📱 **Mobile-Friendly UI**  | Designed with farmer accessibility in mind                         |
-| 🔐 **Authentication**      | Secure farmer authentication and protected services                |
-
----
-
-# 🤖 Kisan Setu AI Saathi
-
-The core intelligence of Kisan Setu is its **Retrieval-Augmented Generation (RAG)** system.
-
-Instead of relying only on the language model's internal knowledge, the system first retrieves relevant information from a curated agricultural knowledge base.
-
-This helps make responses more **grounded in the project's selected source documents**.
-
-## 🔄 RAG Pipeline
-
-```text
-             Farmer Question
-                    │
-                    ▼
-          ┌──────────────────┐
-          │ Query Processing │
-          └────────┬─────────┘
-                   │
-                   ▼
-          ┌──────────────────┐
-          │ Document         │
-          │ Retrieval        │
-          └────────┬─────────┘
-                   │
-                   ▼
-          ┌──────────────────┐
-          │ Relevant Context │
-          └────────┬─────────┘
-                   │
-                   ▼
-          ┌──────────────────┐
-          │ Gemini / LLM     │
-          │ Response         │
-          └────────┬─────────┘
-                   │
-                   ▼
-          ┌──────────────────┐
-          │ Farmer-Friendly  │
-          │ Answer           │
-          └──────────────────┘
-```
-
-### AI Service Responsibilities
-
-The Python AI service handles:
-
-* RAG processing
-* Agricultural document retrieval
-* PDF processing
-* Context preparation
-* Prompt construction
-* LLM integration
-* Response generation
-* Conversation-related processing
-
----
-
-# 📚 Agricultural Knowledge Base
-
-The RAG knowledge base contains curated agricultural and government information.
-
-Potential sources include:
-
-* Government scheme documents
-* Agricultural guidelines
-* Crop information
-* Farming practices
-* Official agricultural resources
-
-### Knowledge Pipeline
-
-```text
-Official / Verified Document
-          │
-          ▼
-    Knowledge Base
-          │
-          ▼
-    PDF Processing
-          │
-          ▼
-    Text Extraction
-          │
-          ▼
-       Chunking
-          │
-          ▼
-      Retrieval
-          │
-          ▼
-    Relevant Context
-          │
-          ▼
-     Gemini LLM
-          │
-          ▼
-     AI Response
-```
-
----
-
-# 🏪 Mandi & Market Module
-
-The Mandi module provides structured market information through the backend.
-
-### Supported functionality
-
-* Create mandi records
-* List available mandis
-* Search mandis
-* Search products
-* Search by location
-* Search by district
-* View mandi information
-* Manage product listings
-* Identify matching products and prices
-
-The architecture can later be extended to integrate **live mandi-price APIs and external agricultural market data**.
-
----
-
-# 💰 Crop Sales Management
-
-Farmers can maintain records of their crop sales.
-
-A sales record can contain:
-
-* Farmer
-* Product
-* Quantity
-* Buyer
-* Amount
-* Date
-
-### Example workflow
-
-```text
-Create Sale
-    │
-    ▼
-MongoDB
-    │
-    ├──► View Farmer Sales
-    │
-    ├──► Filter by Product
-    │
-    ├──► Filter by Year
-    │
-    └──► Filter by Product + Year
-```
-
----
-
-# 📋 Government Schemes
-
-Kisan Setu provides an interface for discovering agricultural government schemes.
-
-Information can include:
-
-* Scheme overview
-* Eligibility
-* Benefits
-* Required documents
-* Application information
-* Important conditions
-
-The knowledge base can be expanded using **verified government documents and official sources**.
-
----
-
-# 🎙️ Voice Assistance
-
-Voice interaction is designed to reduce dependence on typing.
-
-```text
-Farmer Speaks
-      │
-      ▼
-Speech Recognition
-      │
-      ▼
-Text Query
-      │
-      ▼
-AI / RAG Assistant
-      │
-      ▼
-AI Response
-      │
-      ▼
-Text-to-Speech
-      │
-      ▼
-Farmer Hears Response
-```
-
-Voice functionality can use browser-supported:
-
-* Speech Recognition
-* Speech Synthesis
-
-Availability may vary depending on the browser and device.
-
----
-
-# 🌐 Multilingual Accessibility
-
-The platform is designed around three primary interaction styles:
-
-* 🇮🇳 Hindi
-* 🇬🇧 English
-* 🗣️ Hinglish
-
-The long-term objective is to expand support for additional Indian languages.
-
----
-
-# 🏗️ System Architecture
-
-## Frontend
-
-**React + Vite**
-
-Responsible for:
-
-* Farmer interface
-* Dashboard
-* AI chatbot
-* Voice interaction
-* Crop marketplace
-* Government schemes
-* Profile
-* Search
-* Responsive/mobile experience
-
-## Backend
-
-**Node.js + Express.js**
-
-Responsible for:
-
-* REST APIs
-* Authentication
-* Controllers
-* Business logic
-* Database communication
-* Request validation
-* Middleware
-
-## AI Microservice
-
-**Python + FastAPI**
-
-Responsible for:
-
-* RAG pipeline
-* Document processing
-* Retrieval
-* LLM integration
-* AI response generation
-
-## Database
-
-**MongoDB + Mongoose**
-
-Responsible for:
-
-* Farmer records
-* Crop information
-* Mandi information
-* Sales records
-* Application data
-
----
-
-# 🛠️ Technology Stack
-
-| Layer               | Technology          |
-| ------------------- | ------------------- |
-| Frontend            | React, Vite         |
-| Backend             | Node.js, Express.js |
-| Database            | MongoDB, Mongoose   |
-| AI Service          | Python, FastAPI     |
-| RAG                 | LangChain           |
-| LLM                 | Google Gemini       |
-| Document Processing | PyPDF               |
-| Authentication      | JWT / OTP           |
-| Voice               | Web Speech API      |
-| Version Control     | Git, GitHub         |
-
----
-
-# 📁 Repository Structure
-
-```text
 Kisan-Setu/
+├── .gitignore
+├── .vscode/
+│   └── settings.json
+├── vercel.json
+├── README.md
 │
 ├── backend/
+│   ├── package.json
+│   ├── postman-collection.json
+│   ├── .env.example
 │   └── src/
-│       ├── chatbot/
-│       │   ├── main.py
-│       │   ├── config.py
-│       │   ├── llm_service.py
-│       │   ├── rag_service.py
+│       ├── app.js
+│       ├── index.js
+│       ├── constants.js
+│       ├── chatbot/                # Python RAG microservice
+│       │   ├── main.py             # FastAPI entry point
+│       │   ├── config.py           # Environment configuration
+│       │   ├── llm_service.py      # LangChain + Gemini integration
+│       │   ├── rag_service.py      # Document retrieval engine
 │       │   └── data/
-│       │       └── documents/
-│       │
+│       │       ├── document_cache.json
+│       │       └── documents/      # Official scheme PDFs
 │       ├── controllers/
-│       ├── models/
-│       ├── routes/
+│       │   ├── admin.controller.js
+│       │   ├── crop.controller.js
+│       │   ├── csc.controller.js
+│       │   ├── farmer.controller.js
+│       │   ├── scheme.controller.js
+│       │   └── video.controller.js
+│       ├── db/
+│       │   └── index.db.js
 │       ├── middlewares/
-│       ├── utils/
-│       └── index.js
+│       │   ├── auth.middleware.js
+│       │   └── error.middleware.js
+│       ├── models/
+│       │   ├── cropListing.model.js
+│       │   ├── farmer.model.js
+│       │   ├── mandiPriceCache.model.js
+│       │   ├── scheme.model.js
+│       │   ├── schemeApplication.model.js
+│       │   └── video.model.js
+│       ├── routes/
+│       │   ├── admin.routes.js
+│       │   ├── crop.routes.js
+│       │   ├── csc.routes.js
+│       │   ├── farmer.routes.js
+│       │   ├── scheme.routes.js
+│       │   ├── video.routes.js
+│       │   └── voice.routes.js
+│       ├── scripts/
+│       │   └── seedSchemes.js
+│       ├── services/
+│       │   └── aiChat.service.js
+│       └── utils/
+│           ├── agristack.js
+│           ├── agmarknet.js
+│           ├── bhashini.js
+│           ├── cloudinary.js
+│           ├── geo.js
+│           ├── jwt.js
+│           ├── logger.js
+│           ├── otp.js
+│           └── sms.js
 │
-├── frontend/
-│   └── src/
-│       ├── pages/
-│       │   ├── Login/
-│       │   ├── Home/
-│       │   ├── Chat/
-│       │   ├── SellCrop/
-│       │   ├── Schemes/
-│       │   ├── Profile/
-│       │   └── Admin/
-│       │
-│       ├── components/
-│       └── services/
-│           └── api.js
-│
-├── docs/
-├── tests/
-│
-├── .env.example
-├── .gitignore
-├── LICENSE
-├── CONTRIBUTING.md
-└── README.md
+└── frontend/
+    ├── index.html
+    ├── package.json
+    ├── vite.config.js
+    ├── vercel.json
+    ├── README.md
+    ├── public/
+    │   └── assets/
+    └── src/
+        ├── App.jsx
+        ├── App.css
+        ├── main.jsx
+        ├── index.css
+        ├── assets/
+        ├── components/
+        │   ├── BottomNav/
+        │   ├── Button/
+        │   ├── Input/
+        │   └── TopAppBar/
+        ├── context/
+        │   └── AuthContext.jsx
+        ├── layouts/
+        │   ├── MainLayout.jsx
+        │   └── MainLayout.module.css
+        ├── pages/
+        │   ├── Admin/
+        │   ├── Chat/
+        │   ├── Home/
+        │   ├── Login/
+        │   ├── Marketplace/
+        │   ├── Onboarding/
+        │   ├── Profile/
+        │   ├── Schemes/
+        │   └── Splash/
+        └── services/
+            └── api.js
 ```
 
 ---
 
-# 🚀 Getting Started
+## How the RAG Chatbot Works
 
-## Prerequisites
-
-Install:
-
-* **Node.js 18+**
-* **npm**
-* **Python 3.10+**
-* **MongoDB / MongoDB Atlas**
-* **Git**
-* **Google Gemini API key**
+```
+User Query (Hindi / English)
+        │
+        ▼
+Voice Recognition — Web Speech API (browser-native STT)
+        │
+        ▼
+Node.js Express API — POST /api/v1/voice/text-query
+        │  (execFile)
+        ▼
+Python RAG Engine — backend/src/chatbot/
+   1. rag_service.py  → Document retrieval from scheme PDFs
+   2. llm_service.py  → Response generation via LangChain + Gemini 2.0 Flash
+        │
+        ▼
+Structured JSON → AI Response Card (React /chat page)
+        │
+        ▼
+Text-to-Speech — Web Speech Synthesis API
+```
 
 ---
 
-## 1. Clone Repository
+## Quick Start
 
+### Prerequisites
+- Node.js v18+ and npm
+- Python v3.10+
+- MongoDB Atlas (free tier is sufficient)
+- Google Gemini API key (optional — enables live AI responses)
+
+### 1. Clone the Repository
 ```bash
-git clone <repository-url>
-cd Kisan-Setu
+git clone https://github.com/infinity-0008/SIH-Project.git
+cd SIH-Project
 ```
 
----
-
-## 2. Backend Setup
-
+### 2. Backend Setup
 ```bash
 cd backend
 npm install
 ```
 
-Create:
-
-```text
-backend/.env
-```
-
-Example:
-
+Create a `.env` file inside `backend/` :
 ```env
 PORT=5000
-
-MONGODB_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_jwt_secret
-
-OTP_SECRET=your_otp_secret
-
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/kisan_setu
+JWT_SECRET=your_jwt_secret_here
+OTP_SECRET=your_otp_secret_here
 GEMINI_API_KEY=your_google_gemini_api_key
-
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD=your_admin_password
 CORS_ORIGIN=http://localhost:5173
 ```
 
-Start the backend:
+Install Python dependencies for the RAG service:
+```bash
+pip install langchain-google-genai pypdf
+```
 
+Start the backend:
 ```bash
 npm run dev
 ```
+Runs at `http://localhost:5000` or any of local server hosting in respective server.
 
-Backend:
-
-```text
-http://localhost:5000
-```
-
----
-
-# 3. Frontend Setup
-
-Open another terminal:
-
+### 3. Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-
-Frontend:
-
-```text
-http://localhost:5173
-```
+Runs at `http://localhost:5173` or any of local server hosting in respective server.
 
 ---
 
-# 4. RAG / AI Setup
+## API Reference
 
-Navigate to the AI service:
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/v1/farmers/send-otp` | Send OTP to farmer's mobile number |
+| POST | `/api/v1/farmers/verify-otp` | Verify OTP and receive JWT |
+| GET | `/api/v1/farmers/profile` | Fetch logged-in farmer's profile |
+| POST | `/api/v1/voice/text-query` | RAG AI text chat query |
+| POST | `/api/v1/voice/query` | Voice query (audio → AI response) |
+| GET | `/api/v1/schemes` | List all government schemes |
+| POST | `/api/v1/schemes/:code/apply` | Apply for a government scheme |
+| GET | `/api/v1/crops` | Browse all listed crops |
+| POST | `/api/v1/crops` | List a new crop for sale |
+| POST | `/api/v1/admin/farmers` | Admin: register a Kisan ID |
+| GET | `/api/v1/health` | Service health check |
 
-```bash
-cd backend/src/chatbot
-```
-
-Install required dependencies:
-
-```bash
-pip install langchain-google-genai pypdf
-```
-
-Additional Python dependencies should be installed according to the project's configured requirements.
-
-The FastAPI entry point is:
-
-```text
-backend/src/chatbot/main.py
-```
+Full request/response examples are available in [`postman-collection.json`](./backend/postman-collection.json).
 
 ---
 
-# 🔌 API Overview
+## Schemes Covered by the AI Knowledge Base
 
-## Authentication
-
-| Method | Endpoint                     | Description        |
-| ------ | ---------------------------- | ------------------ |
-| POST   | `/api/v1/farmers/send-otp`   | Send OTP           |
-| POST   | `/api/v1/farmers/verify-otp` | Verify OTP         |
-| GET    | `/api/v1/farmers/profile`    | Get farmer profile |
-
-## AI & Voice
-
-| Method | Endpoint                   | Description          |
-| ------ | -------------------------- | -------------------- |
-| POST   | `/api/v1/voice/text-query` | Send text query      |
-| POST   | `/api/v1/voice/query`      | Process voice query  |
-| GET    | `/api/v1/health`           | Check service health |
-
-## Government Schemes
-
-| Method | Endpoint                      | Description           |
-| ------ | ----------------------------- | --------------------- |
-| GET    | `/api/v1/schemes`             | Get available schemes |
-| POST   | `/api/v1/schemes/:code/apply` | Apply for a scheme    |
-
-## Crops
-
-| Method | Endpoint        | Description         |
-| ------ | --------------- | ------------------- |
-| GET    | `/api/v1/crops` | Get crop listings   |
-| POST   | `/api/v1/crops` | Create crop listing |
-
-## Admin
-
-| Method | Endpoint                | Description           |
-| ------ | ----------------------- | --------------------- |
-| POST   | `/api/v1/admin/farmers` | Manage farmer records |
+| Code | Scheme | Benefit |
+|---|---|---|
+| PM-KMY | PM Kisan Maandhan Yojana | ₹3,000/month pension from age 60 |
+| PM-KISAN | PM Kisan Samman Nidhi | ₹6,000/year across 3 direct bank instalments |
+| PMFBY | PM Fasal Bima Yojana | Crop loss insurance — 2% premium (Kharif), 1.5% (Rabi) |
+| KCC | Kisan Credit Card | ₹3 lakh credit facility at 4% effective interest |
 
 ---
 
-# 🔐 Security
+## Tech Stack
 
-Never commit sensitive credentials to GitHub.
-
-Keep the following private:
-
-```text
-.env
-API keys
-Database credentials
-JWT secrets
-OTP secrets
-Passwords
-```
-
-Use:
-
-```text
-.env.example
-```
-
-to document the required environment variables without exposing real credentials.
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, Vite 5, CSS Modules, Lucide Icons |
+| Backend API | Node.js 24, Express.js 5, MongoDB Atlas, Mongoose |
+| AI / RAG Engine | Python 3, LangChain, Google Gemini 2.0 Flash |
+| Document Parsing | PyPDF for chunking and retrieval from official scheme PDFs |
+| Authentication | JWT, OTP-based mobile login |
+| Media Storage | Cloudinary (images), MongoDB (structured data) |
+| Voice | Web Speech API (native browser STT/TTS, no external API cost) |
+| AgriStack | Custom farmer registry with Kisan ID auto-link on login |
 
 ---
 
-# 🧪 Testing
+## Roadmap
 
-Testing should cover:
-
-* API functionality
-* Authentication
-* RAG retrieval
-* AI response generation
-* Database operations
-* Voice-related functionality
-* Frontend/backend integration
-
-For Python components:
-
-```bash
-pytest
-```
+- [ ] Multilingual support beyond Hindi and English (regional languages)
+- [ ] Offline-first support for low-connectivity rural areas
+- [ ] SMS-based fallback for feature phones
+- [ ] Integration with e-NAM for real-time mandi price sync
 
 ---
-
-# 📈 Future Scope
-
-## 🌦️ Smart Agriculture
-
-* Weather integration
-* Location-aware recommendations
-* Crop calendars
-* Pest and disease identification
-* Crop-health analysis
-* Soil information
-
-## 🏪 Market Intelligence
-
-* Live mandi prices
-* Price comparison
-* Historical price trends
-* Market recommendations
-* Demand forecasting
-
-## 🤖 Advanced AI
-
-* Image-based crop disease detection
-* Multimodal agricultural analysis
-* Personalized recommendations
-* Improved agricultural RAG
-* Source verification
-* Feedback-based improvement
-
-## 🗣️ Accessibility
-
-* More Indian languages
-* Voice-first interaction
-* Improved speech-to-text
-* Improved text-to-speech
-* Low-bandwidth experience
-* Simplified farmer-oriented interface
-
-## ☁️ Platform
-
-* Role-based access control
-* Advanced admin dashboard
-* API rate limiting
-* Monitoring
-* Cloud deployment
-* CI/CD automation
-
----
-
-<div align="center">
-
-### 🌾 Kisan Setu — Connecting Farmers with Technology
-
-**Built for Smart India Hackathon 2026 🇮🇳**
-
-</div>
