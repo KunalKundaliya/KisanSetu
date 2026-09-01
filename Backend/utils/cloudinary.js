@@ -1,15 +1,30 @@
+import { v2 as cloudinary } from "cloudinary";
 import logger from "./logger.js";
 
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 /**
- * Upload file to Cloudinary
+ * Upload image to Cloudinary
+ * @param {string} filePath - local file path or buffer
+ * @param {string} folder - e.g., "kisan-setu/farmers"
+ * @returns {Object} { url, publicId }
  */
 export const uploadToCloudinary = async (filePath, folder = "kisan-setu") => {
   try {
-    // Mock implementation - in production would use cloudinary.v2.uploader
-    logger.info(`Uploading ${filePath} to Cloudinary/${folder}`);
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder,
+      resource_type: "auto",
+      transformation: [{ width: 500, height: 500, crop: "limit" }],
+    });
+
     return {
-      url: `https://res.cloudinary.com/demo/image/upload/c_scale,w_300/${folder}/sample.jpg`,
-      publicId: `${folder}/sample-${Date.now()}`,
+      url: result.secure_url,
+      publicId: result.public_id,
     };
   } catch (error) {
     logger.error(`Cloudinary upload error: ${error.message}`);
@@ -18,14 +33,18 @@ export const uploadToCloudinary = async (filePath, folder = "kisan-setu") => {
 };
 
 /**
- * Delete file from Cloudinary
+ * Delete image from Cloudinary
+ * @param {string} publicId
+ * @returns {Object}
  */
 export const deleteFromCloudinary = async (publicId) => {
   try {
-    logger.info(`Deleting ${publicId} from Cloudinary`);
-    return { success: true, publicId };
+    const result = await cloudinary.uploader.destroy(publicId);
+    return result;
   } catch (error) {
     logger.error(`Cloudinary delete error: ${error.message}`);
     throw error;
   }
 };
+
+export default cloudinary;

@@ -1,100 +1,152 @@
 import logger from "./logger.js";
 
+const BHASHINI_BASE_URL = "https://bhashini.gov.in/api";
+
 /**
- * Mock Speech-to-Text (ASR) using Bhashini API
+ * Bhashini Voice Integration
+ * Handles: Speech-to-Text (ASR), Text-to-Speech (TTS), Translation, Language Detection
+ */
+
+/**
+ * Speech-to-Text (ASR) - Convert Hindi audio to text
+ * @param {Buffer} audioBuffer - audio data
+ * @param {string} language - "hi" for Hindi
+ * @returns {Object} { text, confidence, language }
  */
 export const speechToText = async (audioBuffer, language = "hi") => {
   try {
-    // In production, this would call Bhashini ASR API
-    // For now, return mock response
+    // For production: use Bhashini ASR API
+    // Example API call:
+    // const response = await fetch(`${BHASHINI_BASE_URL}/asr`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "audio/wav", "Authorization": `Bearer ${process.env.BHASHINI_API_KEY}` },
+    //   body: audioBuffer,
+    // });
+
+    // For hackathon: simulate response
+    logger.info(`ASR called for language: ${language}, audio size: ${audioBuffer?.length || 0} bytes`);
+
     return {
-      text: "Namaste, main apne fasal ke baare mein poocha hoon",
+      text: "[Audio transcription would appear here]",
       confidence: 0.92,
       language,
-      status: "success",
     };
   } catch (error) {
-    logger.error(`ASR error: ${error.message}`);
-    return { text: "", confidence: 0, error: error.message };
+    logger.error(`Bhashini ASR error: ${error.message}`);
+    throw error;
   }
 };
 
 /**
- * Mock Text-to-Speech (TTS) using Bhashini API
+ * Text-to-Speech (TTS) - Convert text to Hindi audio
+ * @param {string} text - text to speak
+ * @param {string} language - "hi" for Hindi
+ * @returns {Object} { audioBuffer, contentType, language }
  */
 export const textToSpeech = async (text, language = "hi") => {
   try {
-    // In production, this would call Bhashini TTS API
-    // For now, return mock audio
-    const audioBuffer = Buffer.from("mock audio buffer");
+    // For production: use Bhashini TTS API
+    // const response = await fetch(`${BHASHINI_BASE_URL}/tts`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json", "Authorization": `Bearer ${process.env.BHASHINI_API_KEY}` },
+    //   body: JSON.stringify({ text, language }),
+    // });
+
+    // For hackathon: simulate response
+    logger.info(`TTS called for language: ${language}, text length: ${text?.length || 0}`);
+
     return {
-      audioBuffer,
+      audioBuffer: Buffer.from("simulated-audio-data"),
       contentType: "audio/wav",
       language,
-      status: "success",
     };
   } catch (error) {
-    logger.error(`TTS error: ${error.message}`);
-    return { audioBuffer: null, error: error.message };
+    logger.error(`Bhashini TTS error: ${error.message}`);
+    throw error;
   }
 };
 
 /**
  * Translate text between languages
+ * @param {string} text - text to translate
+ * @param {string} sourceLang - source language code (e.g., "en")
+ * @param {string} targetLang - target language code (e.g., "hi")
+ * @returns {Object} { translatedText, confidence }
  */
-export const translateText = async (text, sourceLang = "hi", targetLang = "en") => {
+export const translateText = async (text, sourceLang = "en", targetLang = "hi") => {
   try {
-    // Mock translation
-    const translations = {
-      "hi_en": "Hello, what is your question about farming?",
-      "en_hi": "Namaste, krishi ke baare mein aapka sawaal kya hai?",
-    };
+    // For production: use Bhashini Translation API
+    // const response = await fetch(`${BHASHINI_BASE_URL}/translation`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json", "Authorization": `Bearer ${process.env.BHASHINI_API_KEY}` },
+    //   body: JSON.stringify({ text, sourceLanguage: sourceLang, targetLanguage: targetLang }),
+    // });
 
-    const key = `${sourceLang}_${targetLang}`;
+    // For hackathon: return text as-is (would be translated in production)
+    logger.info(`Translation called: ${sourceLang} -> ${targetLang}`);
+
     return {
-      translatedText: translations[key] || text,
-      confidence: 0.88,
+      translatedText: text,
+      confidence: 0.95,
       sourceLang,
       targetLang,
     };
   } catch (error) {
-    logger.error(`Translation error: ${error.message}`);
-    return { translatedText: text, error: error.message };
+    logger.error(`Bhashini translation error: ${error.message}`);
+    throw error;
   }
 };
 
 /**
- * Detect language from text (checks for Devanagari script)
+ * Auto-detect language of input text
+ * @param {string} text - input text
+ * @returns {Object} { language, confidence }
  */
 export const detectLanguage = (text) => {
-  const devanagariRegex = /[\u0900-\u097F]/g;
-  const isHindi = devanagariRegex.test(text);
+  // Check for Devanagari script (Hindi)
+  const devanagariPattern = /[\u0900-\u097F]/;
+  const hasDevanagari = devanagariPattern.test(text);
+
+  // Check for common Hindi words
+  const hindiWords = ["है", "में", "को", "से", "के", "लिए", "एक", "योजना", "किसान"];
+  const hasHindiWords = hindiWords.some((word) => text.includes(word));
+
+  const isHindi = hasDevanagari || hasHindiWords;
 
   return {
     language: isHindi ? "hi" : "en",
-    confidence: 0.95,
+    confidence: isHindi ? 0.95 : 0.85,
   };
 };
 
 /**
- * Full voice query processing pipeline
+ * Process voice query end-to-end
+ * @param {Buffer} audioBuffer - audio data
+ * @returns {Object} { originalText, detectedLanguage, translatedText }
  */
 export const processVoiceQuery = async (audioBuffer) => {
   try {
-    const asr = await speechToText(audioBuffer, "hi");
-    if (!asr.text) throw new Error("ASR failed");
+    // Step 1: Transcribe audio
+    const asrResult = await speechToText(audioBuffer);
 
-    const langDetect = detectLanguage(asr.text);
-    const tts = await textToSpeech(asr.text, langDetect.language);
+    // Step 2: Detect language
+    const langResult = detectLanguage(asrResult.text);
+
+    // Step 3: Translate if needed (Hindi -> English for processing)
+    let processedText = asrResult.text;
+    if (langResult.language === "hi") {
+      const translation = await translateText(asrResult.text, "hi", "en");
+      processedText = translation.translatedText;
+    }
 
     return {
-      transcription: asr.text,
-      language: langDetect.language,
-      audio: tts.audioBuffer,
-      status: "success",
+      originalText: asrResult.text,
+      detectedLanguage: langResult.language,
+      processedText,
+      confidence: asrResult.confidence,
     };
   } catch (error) {
-    logger.error(`Voice query error: ${error.message}`);
-    return { error: error.message };
+    logger.error(`Voice processing error: ${error.message}`);
+    throw error;
   }
 };
