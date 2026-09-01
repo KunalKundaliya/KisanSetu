@@ -5,7 +5,7 @@
 <div align="center">
 
 
-![SIH](https://img.shields.io/badge/Smart%20India%20Hackathon-2026-blue?style=for-the-badge)
+![SIH](https://img.shields.io/badge/Smart%20India%20Hackathon--blue?style=for-the-badge)
 
 ![React](https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge\&logo=react)
 
