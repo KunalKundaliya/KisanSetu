@@ -1,90 +1,57 @@
 # 🌾 Kisan Setu — Frontend
 
-A **mobile-first React frontend** designed to help Indian farmers easily access digital agricultural services through a simple, accessible, and farmer-friendly interface.
+> **Kisan Setu — Making digital agricultural services simpler for farmers.**
 
-Kisan Setu provides frontend experiences for:
+A mobile-first React frontend that helps Indian farmers access digital agricultural services through a simple, accessible, farmer-friendly interface.
 
-* 🤖 AI Assistant
-* 🏛️ Government Scheme Guidance
-* 🌾 Crop Selling & Marketplace
-* 👨‍🌾 Farmer Dashboard
-* 🔐 OTP Login Flow
-* 👤 Farmer Profile
-* 🛠️ Admin Dashboard
-
-> **Note:** This project is currently frontend-only. Backend services, databases, server-side authentication, and API implementation are not included in this folder.
+**Note:** This is a frontend-only project. Backend services, databases, and server-side authentication are not included here.
 
 ---
 
-## 🚜 Overview
+## 🚜 What Kisan Setu Does
 
-Kisan Setu is designed to simplify access to agricultural information and digital services.
+Kisan Setu simplifies how farmers reach agricultural information and services. With it, farmers can:
 
-Farmers can use the frontend to:
+- Ask questions in **Hindi or English**
+- Chat with an AI assistant
+- Explore government schemes and check eligibility
+- List crops for sale on a marketplace
+- Manage their farmer profile and Kisan ID
+- Use a clean, mobile-friendly dashboard
 
-* Ask questions in **Hindi or English**
-* Interact with an AI assistant
-* Explore government schemes
-* View scheme information and eligibility
-* List crops for sale
-* Browse marketplace information
-* Manage their farmer profile
-* View Kisan ID details
-* Access a simple dashboard
-
-The main goal is to create a **clean, accessible, and easy-to-use experience for farmers**, especially on mobile devices.
+The goal is a clean, accessible experience — built especially for mobile devices.
 
 ---
 
-## ⭐ Key Frontend Features
+## ⭐ Key Features
 
 ### 🔐 OTP Login
-
-A simple login interface designed around an OTP-based authentication flow.
+A simple, secure login flow built around OTP-based authentication.
 
 ### 👨‍🌾 Farmer Dashboard
-
-Provides quick access to the most important farmer services.
+Quick access to every core service a farmer needs, in one place.
 
 ### 🤖 AI Assistant
-
-A chatbot-style interface where farmers can enter questions using:
-
-* Text input
-* Voice input
-* Hindi
-* English
+A chatbot-style interface supporting both text and voice input, in Hindi and English.
 
 ### 🎤 Voice Support
-
-The frontend can use browser speech APIs to convert spoken questions into text.
+Uses browser speech APIs to convert spoken questions into text — no typing required.
 
 ### 🏛️ Scheme Explorer
-
-Farmers can browse government agricultural schemes and view relevant information.
+Browse government agricultural schemes and view eligibility details at a glance.
 
 ### 🌾 Crop Marketplace
-
-Frontend screens for:
-
-* Adding crop listings
-* Viewing crop listings
-* Managing selling information
-* Exploring marketplace content
+Add crop listings, preview them, and explore what other farmers are selling.
 
 ### 👤 Farmer Profile
-
-Provides a dedicated profile interface for farmer information and Kisan ID details.
+A dedicated space for farmer details and Kisan ID information.
 
 ### 🛠️ Admin Dashboard
-
-A frontend dashboard for administrative views and management interfaces.
+A management view for administrators overseeing the platform.
 
 ---
 
-# 🔄 Application Flow
-
-The complete frontend user journey can be represented as:
+## 🔄 Application Flow
 
 ```mermaid
 flowchart TD
@@ -106,9 +73,7 @@ flowchart TD
     C --> L[🛠️ Admin Panel]
 ```
 
----
-
-# 👨‍🌾 Farmer User Flow
+### 👨‍🌾 Farmer Journey
 
 ```mermaid
 flowchart LR
@@ -127,9 +92,7 @@ flowchart LR
     H --> L[Kisan ID]
 ```
 
----
-
-# 🤖 AI Assistant Flow
+### 🤖 AI Assistant Flow
 
 ```mermaid
 flowchart TD
@@ -149,9 +112,7 @@ flowchart TD
 
 > Voice recognition depends on browser and device support.
 
----
-
-# 🏛️ Government Scheme Flow
+### 🏛️ Government Scheme Flow
 
 ```mermaid
 flowchart LR
@@ -161,9 +122,7 @@ flowchart LR
     D --> E[Eligibility Information]
 ```
 
----
-
-# 🌾 Crop Selling Flow
+### 🌾 Crop Selling Flow
 
 ```mermaid
 flowchart LR
@@ -175,7 +134,7 @@ flowchart LR
 
 ---
 
-# 📁 Frontend Structure
+## 📁 Project Structure
 
 ```text
 Kisan-Setu/
@@ -186,7 +145,6 @@ Kisan-Setu/
 │   │
 │   ├── src/
 │   │   ├── assets/
-│   │   │
 │   │   ├── components/
 │   │   │
 │   │   ├── pages/
@@ -215,92 +173,74 @@ Kisan-Setu/
 
 ---
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-* **React** — Frontend UI
-* **Vite** — Development and build tool
-* **JavaScript / JSX** — Application logic
-* **CSS** — Styling and responsive design
-* **Axios** — Frontend API integration
-* **Browser Speech APIs** — Voice input
-* **Responsive Design** — Mobile, tablet, and desktop support
+| Technology | Role |
+|---|---|
+| **React** | Frontend UI |
+| **Vite** | Development & build tool |
+| **JavaScript / JSX** | Application logic |
+| **CSS** | Styling & responsive design |
+| **Axios** | API integration |
+| **Browser Speech APIs** | Voice input |
+| **Responsive Design** | Mobile, tablet, desktop support |
 
 ---
 
-# ⚙️ Setup
+## ⚙️ Getting Started
 
-### 1. Open the frontend folder
-
+**1. Open the frontend folder**
 ```bash
 cd frontend
 ```
 
-### 2. Install dependencies
-
+**2. Install dependencies**
 ```bash
 npm install
 ```
 
-### 3. Start the development server
-
+**3. Start the development server**
 ```bash
 npm run dev
 ```
 
-The application will normally run at:
-
+The app runs by default at:
 ```text
 http://localhost:5173
 ```
 
 ---
 
-# 🚀 Available Commands
+## 🚀 Available Commands
 
-### Development
-
-```bash
-npm run dev
-```
-
-### Production Build
-
-```bash
-npm run build
-```
-
-### Preview Build
-
-```bash
-npm run preview
-```
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run preview` | Preview the production build |
 
 ---
 
-# 📄 Main Pages
+## 📄 Main Pages
 
-| Page           | Purpose                            |
-| -------------- | ---------------------------------- |
-| Login          | OTP login interface                |
-| Home           | Farmer dashboard                   |
-| Chat           | AI assistant interface             |
-| Schemes        | Government scheme explorer         |
+| Page | Purpose |
+|---|---|
+| Login | OTP login interface |
+| Home | Farmer dashboard |
+| Chat | AI assistant interface |
+| Schemes | Government scheme explorer |
 | Scheme Details | Scheme information and eligibility |
-| Sell Crop      | Crop listing interface             |
-| Marketplace    | Crop marketplace UI                |
-| Profile        | Farmer information and Kisan ID    |
-| Admin          | Administrative dashboard           |
-
+| Sell Crop | Crop listing interface |
+| Marketplace | Crop marketplace UI |
+| Profile | Farmer information and Kisan ID |
+| Admin | Administrative dashboard |
 
 ---
 
+## 🌾 Final Goal
 
-# 🌾 Final Goal
-
-The goal of the Kisan Setu frontend is to create a:
+Kisan Setu aims to be:
 
 **Simple → Accessible → Mobile-first → Farmer-friendly → Professional**
 
-digital experience for accessing agricultural services.
-
-> **Kisan Setu — Making digital agricultural services simpler for farmers.**
+A digital experience that makes agricultural services easy to reach, for every farmer.
