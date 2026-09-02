@@ -3,14 +3,7 @@ import { MSP_PRICES, MSP_SCHEME_MAP } from "../constants.js";
 import { haversineDistance } from "./geo.js";
 import logger from "./logger.js";
 
-/**
- * Fetch mandi prices — first check cache, then mock fresh fetch
- * @param {string} cropType
- * @param {string} state
- * @param {number} farmerLat
- * @param {number} farmerLon
- * @returns {Array} mandi prices with distance
- */
+
 export const fetchMandiPrices = async (cropType, state, farmerLat, farmerLon) => {
   try {
     // Check cache first
@@ -83,13 +76,7 @@ export const fetchMandiPrices = async (cropType, state, farmerLat, farmerLon) =>
   }
 };
 
-/**
- * Compare farmer's price with mandi prices + MSP
- * @param {number} expectedPrice
- * @param {Array} mandiPrices
- * @param {string} cropType
- * @returns {Object} comparison result
- */
+
 export const comparePrices = (expectedPrice, mandiPrices, cropType) => {
   const msp = MSP_PRICES[cropType.toLowerCase()] || null;
   const avgMandiPrice =

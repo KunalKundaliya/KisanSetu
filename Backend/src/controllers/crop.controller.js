@@ -3,11 +3,7 @@ import { HTTP_STATUS } from "../constants.js";
 import { fetchMandiPrices, comparePrices } from "../utils/agmarknet.js";
 import logger from "../utils/logger.js";
 
-/**
- * @desc    Create a crop listing (pre-filled from farmer profile)
- * @route   POST /api/v1/crops/list
- * @access  Private (farmer)
- */
+
 export const createCropListing = async (req, res) => {
   try {
     const { cropType, variety, quantity, unit, expectedPrice } = req.body;
@@ -103,11 +99,7 @@ export const getMyListings = async (req, res) => {
   }
 };
 
-/**
- * @desc    Compare crop price with mandi rates + MSP
- * @route   POST /api/v1/crops/compare-price
- * @access  Private
- */
+
 export const compareCropPrice = async (req, res) => {
   try {
     const { cropType, expectedPrice } = req.body;
@@ -138,11 +130,7 @@ export const compareCropPrice = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get mandi prices for a crop
- * @route   GET /api/v1/crops/mandi-prices/:cropType
- * @access  Private
- */
+
 export const getMandiPrices = async (req, res) => {
   try {
     const { cropType } = req.params;
@@ -166,11 +154,7 @@ export const getMandiPrices = async (req, res) => {
   }
 };
 
-/**
- * @desc    Update crop listing status
- * @route   PATCH /api/v1/crops/listings/:id
- * @access  Private (farmer)
- */
+
 export const updateCropListing = async (req, res) => {
   try {
     const { id } = req.params;
