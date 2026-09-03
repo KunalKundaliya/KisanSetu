@@ -59,17 +59,17 @@ function App() {
             <Route path="/" element={<PublicFarmerRoute><Splash /></PublicFarmerRoute>} />
             <Route path="/login" element={<PublicFarmerRoute><Login /></PublicFarmerRoute>} />
             <Route path="/onboarding" element={<FarmerRoute><ProfileCreation /></FarmerRoute>} />
-            
+
             {/* Main Farmer App Protected Routes */}
             <Route path="/home" element={<FarmerRoute><Home /></FarmerRoute>} />
             <Route path="/chat" element={<FarmerRoute><Chat /></FarmerRoute>} />
             <Route path="/schemes" element={<FarmerRoute><SchemesList /></FarmerRoute>} />
             <Route path="/schemes/:id" element={<FarmerRoute><SchemeDetails /></FarmerRoute>} />
             <Route path="/sell" element={<FarmerRoute><SellCrop /></FarmerRoute>} />
-            <Route path="/mandi-bhav" element={<FarmerRoute><MandiBhav /></FarmerRoute>} />
+            <Route path="/mandi-bhav" element={<MandiBhav />} />
             <Route path="/sales" element={<FarmerRoute><MySales /></FarmerRoute>} />
             <Route path="/profile" element={<FarmerRoute><Profile /></FarmerRoute>} />
-            
+
             {/* Fallback Route */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

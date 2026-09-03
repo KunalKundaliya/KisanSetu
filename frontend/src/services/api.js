@@ -1,7 +1,13 @@
 import axios from "axios";
 
+// Normalize baseURL so it works whether VITE_API_URL has /api/v1 or just the domain
+const rawApiUrl = import.meta.env.VITE_API_URL;
+const baseURL = rawApiUrl
+  ? (rawApiUrl.endsWith("/api/v1") ? rawApiUrl : `${rawApiUrl.replace(/\/+$/, "")}/api/v1`)
+  : "/api/v1";
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api/v1",
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -21,13 +27,15 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      if (!window.location.pathname.includes("/login") && !window.location.pathname.includes("/admin/login")) {
+      if (!window.location.pathname.includes("/login") &&
+        !window.location.pathname.includes("/admin/login")) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmer");
         localStorage.removeItem("admin");
+        window.location.href = "/login";  // redirect to login page on error
       }
     }
-    return Promise.reject(error);
+     return Promise.reject(error);
   }
 );
 
@@ -82,6 +90,9 @@ export const compareCropPrice = (data) =>
 
 export const getMandiPrices = (cropType) =>
   api.get(`/crops/mandi-prices/${cropType}`);
+
+export const getCropsMeta = () =>
+  api.get("/crops/meta");
 
 // Admin API
 export const adminLogin = (username, password) =>
