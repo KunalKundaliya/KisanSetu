@@ -81,6 +81,8 @@ export const getDashboardStats = async (req, res) => {
 
     const stateDistribution = await Farmer.aggregate([
       { $match: { role: "farmer" } },
+
+      //for finfind individual state distribution
       { $group: { _id: "$state", count: { $sum: 1 } } },
       { $sort: { count: -1 } },
       { $limit: 10 },
@@ -114,7 +116,7 @@ export const getDashboardStats = async (req, res) => {
       message: "Failed to fetch stats",
     });
   }
-};
+}; 
 
 /**
  * List all farmers
@@ -125,6 +127,7 @@ export const listFarmers = async (req, res) => {
     const { page = 1, limit = 20, search, state, verified } = req.query;
     const query = { role: "farmer" };
 
+    //regex is reguar expression search  - matching char search
     if (search) {
       query.$or = [
         { kisanId: { $regex: search, $options: "i" } },

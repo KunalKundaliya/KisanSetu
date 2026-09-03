@@ -27,11 +27,7 @@ export const getEscalations = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get all pending scheme applications (CSC view)
- * @route   GET /api/v1/csc/applications
- * @access  CSC Operator
- */
+ 
 export const getPendingApplications = async (req, res) => {
   try {
     const applications = await SchemeApplication.find({
@@ -52,11 +48,7 @@ export const getPendingApplications = async (req, res) => {
   }
 };
 
-/**
- * @desc    Update scheme application status (CSC action)
- * @route   PATCH /api/v1/csc/applications/:id
- * @access  CSC Operator
- */
+
 export const updateApplicationStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -99,11 +91,7 @@ export const updateApplicationStatus = async (req, res) => {
   }
 };
 
-/**
- * @desc    Escalate a query to CSC
- * @route   POST /api/v1/csc/escalate
- * @access  Private
- */
+
 export const escalateQuery = async (req, res) => {
   try {
     const { schemeCode, reason, queryText } = req.body;
@@ -131,11 +119,7 @@ export const escalateQuery = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get CSC dashboard stats
- * @route   GET /api/v1/csc/stats
- * @access  CSC Operator
- */
+
 export const getDashboardStats = async (req, res) => {
   try {
     const [totalFarmers, totalApplications, escalations, activeListings] =

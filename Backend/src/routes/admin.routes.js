@@ -18,10 +18,8 @@ import { verifyToken, verifyRole } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-// checkk ???
-router.post("/login", adminLogin);
 
-// admin token ??
+router.post("/login", adminLogin);
 router.use(verifyToken, verifyRole("admin"));
 
 // dashboard here 
