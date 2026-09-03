@@ -1,16 +1,27 @@
 import CropListing from "../models/cropListing.model.js";
-import { HTTP_STATUS } from "../constants.js";
+import { HTTP_STATUS, CROP_METADATA, MSP_PRICES, CROP_TYPES } from "../constants.js";
 import { fetchMandiPrices, comparePrices } from "../utils/agmarknet.js";
 import logger from "../utils/logger.js";
 
-/**
- * @desc    Create a crop listing (pre-filled from farmer profile)
- * @route   POST /api/v1/crops/list
- * @access  Private (farmer)
- */
+export const getCropsMeta = async (req, res) => {
+  try {
+    return res.status(HTTP_STATUS.OK).json({
+      crops: CROP_METADATA,
+      cropTypes: CROP_TYPES,
+      mspPrices: MSP_PRICES,
+    });
+  } catch (error) {
+    logger.error(`Get crops meta error: ${error.message}`);
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      message: "Failed to fetch crops metadata",
+    });
+  }
+};
+
+
 export const createCropListing = async (req, res) => {
   try {
-    const { cropType, variety, quantity, unit, expectedPrice } = req.body;
+    const { cropType, variety, quantity, unit, expectedPrice, pricePerQuintal, mandiName, quality } = req.body;
 
     if (!cropType || !quantity) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({
@@ -18,14 +29,16 @@ export const createCropListing = async (req, res) => {
       });
     }
 
-    // Pre-fill from farmer profile
+    // pre-fill from farmer prof from kisanID details
     const listing = await CropListing.create({
       farmerId: req.user._id,
       cropType: cropType || req.user.cropsGrown?.[0],
       variety,
       quantity,
       unit: unit || "quintal",
-      expectedPrice,
+      expectedPrice: expectedPrice !== undefined ? expectedPrice : pricePerQuintal,
+      mandiName,
+      quality,
       location: {
         state: req.user.state,
         district: req.user.district,
@@ -49,11 +62,7 @@ export const createCropListing = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get all crop listings
- * @route   GET /api/v1/crops/listings
- * @access  Private
- */
+
 export const getCropListings = async (req, res) => {
   try {
     const { cropType, state, status } = req.query;
@@ -80,11 +89,7 @@ export const getCropListings = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get my crop listings
- * @route   GET /api/v1/crops/my-listings
- * @access  Private (farmer)
- */
+
 export const getMyListings = async (req, res) => {
   try {
     const listings = await CropListing.find({ farmerId: req.user._id }).sort({
@@ -103,11 +108,7 @@ export const getMyListings = async (req, res) => {
   }
 };
 
-/**
- * @desc    Compare crop price with mandi rates + MSP
- * @route   POST /api/v1/crops/compare-price
- * @access  Private
- */
+
 export const compareCropPrice = async (req, res) => {
   try {
     const { cropType, expectedPrice } = req.body;
@@ -138,11 +139,7 @@ export const compareCropPrice = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get mandi prices for a crop
- * @route   GET /api/v1/crops/mandi-prices/:cropType
- * @access  Private
- */
+
 export const getMandiPrices = async (req, res) => {
   try {
     const { cropType } = req.params;
@@ -166,11 +163,7 @@ export const getMandiPrices = async (req, res) => {
   }
 };
 
-/**
- * @desc    Update crop listing status
- * @route   PATCH /api/v1/crops/listings/:id
- * @access  Private (farmer)
- */
+
 export const updateCropListing = async (req, res) => {
   try {
     const { id } = req.params;

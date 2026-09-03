@@ -8,6 +8,8 @@ const cropListingSchema = new Schema(
     quantity: { type: Number, required: true },
     unit: { type: String, enum: ["quintal", "kg", "tonne"], default: "quintal" },
     expectedPrice: { type: Number },
+    mandiName: { type: String, trim: true },
+    quality: { type: String, trim: true },
     mandiPriceRef: { type: Schema.Types.ObjectId, ref: "MandiPriceCache" },
     location: {
       latitude: { type: Number },

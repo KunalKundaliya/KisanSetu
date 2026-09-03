@@ -91,6 +91,9 @@ export const compareCropPrice = (data) =>
 export const getMandiPrices = (cropType) =>
   api.get(`/crops/mandi-prices/${cropType}`);
 
+export const getCropsMeta = () =>
+  api.get("/crops/meta");
+
 // Admin API
 export const adminLogin = (username, password) =>
   api.post("/admin/login", { username, password });

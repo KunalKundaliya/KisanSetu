@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getCropsMeta,
   createCropListing,
   getCropListings,
   getMyListings,
@@ -7,18 +8,19 @@ import {
   getMandiPrices,
   updateCropListing,
 } from "../controllers/crop.controller.js";
-import { verifyToken } from "../middlewares/auth.middleware.js";
+import { verifyToken, optionalVerifyToken } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-// All routes require authentication
-router.use(verifyToken);
+// Public / Guest accessible metadata and rates
+router.get("/meta", optionalVerifyToken, getCropsMeta);
+router.get("/mandi-prices/:cropType", optionalVerifyToken, getMandiPrices);
+router.get("/listings", optionalVerifyToken, getCropListings);
 
-router.post("/list", createCropListing);
-router.get("/listings", getCropListings);
-router.get("/my-listings", getMyListings);
-router.post("/compare-price", compareCropPrice);
-router.get("/mandi-prices/:cropType", getMandiPrices);
-router.patch("/listings/:id", updateCropListing);
+// Protected routes requiring farmer authentication
+router.post("/list", verifyToken, createCropListing);
+router.get("/my-listings", verifyToken, getMyListings);
+router.post("/compare-price", verifyToken, compareCropPrice);
+router.patch("/listings/:id", verifyToken, updateCropListing);
 
 export default router;

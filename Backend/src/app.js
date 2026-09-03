@@ -19,9 +19,10 @@ const corsOptions = {
     if (
       !origin ||
       origin === process.env.CORS_ORIGIN ||
-      origin === "http://localhost:5173"  
+      origin === "http://localhost:5173" ||
+      origin === "http://localhost:5174" 
     ) 
-    {if(origin) logger.info(`CORS allowed: ${origin}`);
+    {
     callback(null, true);
 
     } else {

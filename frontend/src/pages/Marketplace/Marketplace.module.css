@@ -157,10 +157,22 @@
 
 .rateCard {
   background-color: var(--bg-card);
-  border: 1px solid var(--border-light);
+  border: 2px solid var(--border-light);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rateCard:hover {
+  border-color: var(--primary);
+}
+
+.rateCardSelected {
+  border: 2px solid var(--primary) !important;
+  background-color: #f0fdf4;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
 }
 
 .rateCardBest {
@@ -173,6 +185,18 @@
   font-size: 12px;
   font-weight: 600;
   padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectedBadge {
+  background-color: #15803d;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
 }
 
 .rateContent {
@@ -202,7 +226,120 @@
 .rateRight {
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.rateCardActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-top: 1px solid var(--border-light);
+}
+
+.rateSellDirectBtn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   gap: 4px;
+  transition: background-color 0.2s;
+}
+
+.rateSellDirectBtn:hover {
+  background-color: var(--primary-dark);
+}
+
+.mandiOptionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.mandiOptionCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-light);
+  background-color: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.mandiOptionCard:hover {
+  border-color: var(--primary);
+  background-color: #f8fafc;
+}
+
+.mandiOptionCardActive {
+  border: 2px solid var(--primary) !important;
+  background-color: #f0fdf4 !important;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.12);
+}
+
+.mandiOptionLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mandiOptionRadio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.mandiOptionRadioActive {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.mandiOptionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+.mandiOptionSub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 2px;
+}
+
+.mandiOptionRight {
+  text-align: right;
+}
+
+.mandiOptionPrice {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+}
+
+.mandiOptionUnit {
+  font-size: 10px;
+  color: var(--text-secondary);
 }
 
 .price {
@@ -221,7 +358,8 @@
 
 .fixedBottom {
   position: fixed;
-  bottom: 64px; /* Positioned cleanly above bottom navigation bar (64px) */
+  bottom: 64px;
+  /* Positioned cleanly above bottom navigation bar (64px) */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -239,6 +377,7 @@
   gap: 12px;
   margin-bottom: 24px;
 }
+
 .statBox {
   flex: 1;
   background-color: var(--bg-card);
@@ -250,9 +389,24 @@
   gap: 4px;
   box-shadow: var(--shadow-sm);
 }
-.statLabel { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
-.statValue { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-.statValueGreen { font-size: 14px; font-weight: 700; color: var(--primary); }
+
+.statLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.statValue {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.statValueGreen {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
 
 .tabsRow {
   display: flex;
@@ -262,6 +416,7 @@
   margin-bottom: 24px;
   border: 1px solid var(--border-light);
 }
+
 .salesTab {
   flex: 1;
   padding: 8px;
@@ -273,6 +428,7 @@
   transition: all 0.2s;
   cursor: pointer;
 }
+
 .salesTabActive {
   background-color: var(--primary);
   color: white;
@@ -283,6 +439,7 @@
   flex-direction: column;
   gap: 16px;
 }
+
 .saleCard {
   background-color: var(--bg-card);
   border: 1px solid var(--border-light);
@@ -291,31 +448,59 @@
   box-shadow: var(--shadow-sm);
   cursor: pointer;
 }
+
 .saleCard:active {
   transform: scale(0.98);
 }
+
 .saleHeader {
   display: flex;
   justify-content: space-between;
 }
+
 .saleTitleGroup {
   display: flex;
   gap: 12px;
 }
-.saleIcon { font-size: 24px; }
-.saleCrop { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
-.saleDetail { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
-.salePrice { font-size: 15px; font-weight: 700; color: var(--primary); }
+
+.saleIcon {
+  font-size: 24px;
+}
+
+.saleCrop {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.saleDetail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.salePrice {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
 .saleStatusGroup {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 12px;
 }
+
 .saleStatusBadge {
   font-size: 11px;
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 4px;
 }
-.saleTime { font-size: 11px; color: var(--text-tertiary); }
+
+.saleTime {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}

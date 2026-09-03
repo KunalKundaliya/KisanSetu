@@ -39,10 +39,31 @@ export const CROP_TYPES = [
   "mustard",
   "soybean",
   "groundnut",
+  "gram",
+  "moong",
+  "bajra",
+  "potato",
+  "onion",
   "pulses",
   "vegetables",
   "fruits",
   "spices",
+];
+
+export const CROP_METADATA = [
+  { id: "wheat", name: "Gehun (Wheat)", emoji: "🌾", category: "cereal", msp: 2275 },
+  { id: "rice", name: "Dhan (Rice)", emoji: "🍚", category: "cereal", msp: 2320 },
+  { id: "mustard", name: "Sarson (Mustard)", emoji: "🌼", category: "oilseed", msp: 5650 },
+  { id: "cotton", name: "Kapas (Cotton)", emoji: "☁️", category: "cash-crop", msp: 7121 },
+  { id: "maize", name: "Makka (Maize)", emoji: "🌽", category: "cereal", msp: 2225 },
+  { id: "sugarcane", name: "Ganna (Sugarcane)", emoji: "🎋", category: "cash-crop", msp: 315 },
+  { id: "soybean", name: "Soybean", emoji: "🌱", category: "oilseed", msp: 4892 },
+  { id: "groundnut", name: "Mungfali (Groundnut)", emoji: "🥜", category: "oilseed", msp: 6778 },
+  { id: "gram", name: "Chana (Gram)", emoji: "🥣", category: "pulses", msp: 5335 },
+  { id: "moong", name: "Moong Dal", emoji: "🥗", category: "pulses", msp: 8682 },
+  { id: "bajra", name: "Bajra", emoji: "🌾", category: "cereal", msp: 2500 },
+  { id: "potato", name: "Aloo (Potato)", emoji: "🥔", category: "vegetables", msp: null },
+  { id: "onion", name: "Piyaz (Onion)", emoji: "🧅", category: "vegetables", msp: null },
 ];
 
 export const VIDEO_CATEGORIES = [
