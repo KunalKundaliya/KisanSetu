@@ -1,0 +1,82 @@
+name: Code Preview Configuration
+description: Configuration for code preview and documentation generation
+
+# Frontend Configuration
+frontend:
+  language: JavaScript/React
+  root_directory: src
+  preview_paths:
+    - src/components
+    - src/pages
+    - src/services
+  exclude:
+    - node_modules
+    - build
+    - dist
+  file_extensions:
+    - .js
+    - .jsx
+    - .ts
+    - .tsx
+  config_files:
+    - package.json
+    - tsconfig.json
+    - .env.example
+
+# Backend Configuration
+backend:
+  language: Python
+  root_directory: backend
+  preview_paths:
+    - backend/app
+    - backend/routes
+    - backend/services
+  exclude:
+    - __pycache__
+    - venv
+    - env
+    - .venv
+  file_extensions:
+    - .py
+  config_files:
+    - requirements.txt
+    - .env.example
+    - pyproject.toml
+
+# Documentation
+documentation:
+  enabled: true
+  formats:
+    - markdown
+    - html
+  auto_generate: true
+  include_diagrams: true
+
+# Code Highlighting
+highlighting:
+  theme: github-dark
+  line_numbers: true
+  syntax_highlighting: true
+
+# Preview Display Settings
+display:
+  max_file_size: 100kb
+  max_lines: 500
+  truncate_long_files: true
+  show_file_tree: true
+  collapsible_sections: true
+
+# Excluded Patterns
+ignore_patterns:
+  - "*.min.js"
+  - "*.min.css"
+  - "*.lock"
+  - ".DS_Store"
+  - "*.log"
+
+# Links and References
+references:
+  repository: https://github.com/KunalKundaliya/KisanSetu
+  homepage: https://kisan-setu-alpha.vercel.app
+  docs: ./docs
+  license: MIT
